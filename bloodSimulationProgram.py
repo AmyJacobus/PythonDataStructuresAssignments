@@ -22,7 +22,7 @@ def blood_sample_generator(blood_types):
 
 def serial_code_generator(blood_list):
     """
-    Basically labes each samples and updates the list with the date it was created and a serial number randomly generated
+    Basically labels each samples and updates the list with the date it was created and a serial number randomly generated
     :param blood_list:
     :return:
     """
