@@ -146,20 +146,20 @@ def remove_expired_samples(list): #use a while to loop and check the first in an
     ini_time_for_now = datetime.now()
     todays_date = ini_time_for_now.strftime("%d_%m")
 
-    list = list
-    date = todays_date
-    removed = 0
-    print("Current date: ", date)
-    for x in list: # get each pod
-        pod = x
-        print("Pod is:", pod)
-        print(pod[0][2])
-        if pod[0][2] == date or pod[0][2] > date:
-            sample = pod[0]
-            pod.remove(sample)
-            removed = 1
-    print(f"A total of {removed} pods have been removed on {todays_date}")
-    return list
+    # list = list
+    # date = todays_date
+    # removed = 0
+    # print("Current date: ", date)
+    # for x in list: # get each pod
+    #     pod = x
+    #     print("Pod is:", pod)
+    #     print(pod[0][2])
+    #     if pod[0][2] == date or pod[0][2] > date:
+    #         sample = pod[0]
+    #         pod.remove(sample)
+    #         removed = 1
+    # print(f"A total of {removed} pods have been removed on {todays_date}")
+    # return list
 
 
 # Assignment #2
@@ -241,10 +241,11 @@ def main():
     day = 1
     while day != 31: #runs simulation for 31 days
         lista = generate_10_pods_daily(list) # populate pods with 10 everyday
-        report = pod_list_report(list)
-        list = remove_expired_samples(list)
+        print()
         print(f"Day #{day} pod report")
-        report1 = pod_list_report(list)
+        report = pod_list_report(list)
+       # list = remove_expired_samples(list) to test removed expired
+
         day += 1
 
 
