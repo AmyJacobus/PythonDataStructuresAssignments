@@ -8,49 +8,34 @@ def blood_sample_generator(blood_types):
     :param blood_types:
     :return:
     """
-    daily_blood_samples = []
-    for x in range(1, 11):
-        blood_sample = []
-        random_blood = random.choice(blood_types)
-        blood_sample.append(random_blood)
-        daily_blood_samples.append(blood_sample)
+    daily_blood_sample = []
 
-    print(daily_blood_samples) # list of 10 blood samples
+    #blood type
+    random_blood = random.choice(blood_types)
+    daily_blood_sample.append(random_blood)
+    print(daily_blood_sample)
 
-
-def get_date(): # CAN BE COMPARED BY
+    # get_date(): # CAN BE COMPARED BY
     # Using current time
     ini_time_for_now = datetime.now()
     todays_date = ini_time_for_now.strftime("%d_%m")
+    daily_blood_sample.append(todays_date)
     print('Todays date: ', todays_date)
     after_21days = ini_time_for_now + timedelta(days=21)
     expiration_dates = after_21days.strftime("%d_%m")
+    daily_blood_sample.append(expiration_dates)
     print('Expiration date: ', expiration_dates)
 
-    return todays_date, expiration_dates
+    # serial_code_generator(start_d, end_d):
+
+    serial_number = random.randint(1, 99999999999)
+    daily_blood_sample.append(serial_number)
+
+    print(daily_blood_sample)
+    return daily_blood_sample
 
 
-def serial_code_generator(start_d, end_d):
-    """
-    Basically labels each samples and updates the list with the date it was created and a serial number randomly generated
-    :param blood_list:
-    :return:
-    """
-
-
-
-    date = 22
-    count = len(blood_list)
-    for x in blood_list:
-        x.append(date)
-        count +=1
-        x.append(date + count + random.randint(1,123590)) #gives the actual serial number and add it to the list
-
-    return blood_list
-    # print(blood_list) // to test
-
-
-def hasher(): # NEED TO FIX
+def hasher(blood_sample): # NEED TO FIX
     """
     This how we generate an location_id_code that is going to be labeled on to the sample, basically becomes
     a value in that blood sample list, which will be used to keep track of that specific blood sample, which
@@ -61,40 +46,32 @@ def hasher(): # NEED TO FIX
     global new_hash_id
     new_hash_id = ""
 
-    blood_types  = ['opos']  # EXAMPLE, MAKE SURE TO CHANGE
-
+    blood = blood_sample[0]
+    print('blood?', blood)
     alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                     'v', 'w', 'x', 'y', 'z']
     reverse = ['z','y','x','w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a']
 
-    hash_code = []
-    blood_sample_id_codes = []
-    blood_hash_code = []
-    for blood in blood_types:
-        for letter in blood:
-            blood_hash_code.append(blood)
-            position = alpha.index(letter)  #0
-            new_hash_id += reverse[position] # generates the hash code for me.
-            #hash_code.append(new_hash_id)
-            # position = blood_hash_code.index(blood)
-            # print(position)
-            # list = blood_hash_code[position]
-            # print(list)
-            # list.append(new_hash_id)
-            # blood_sample_id_codes.append(list)
+    # hash_code = []
+    # blood_sample_id_codes = []
+    # blood_hash_code = []
+    for letter in blood:
+        position = alpha.index(letter)  #0
+        print('test', position)
+        new_hash_id += reverse[position] # generates the hash code for me.
+        #hash_code.append(new_hash_id)
+        # position = blood_hash_code.index(blood)
+        # print(position)
+        # list = blood_hash_code[position]
+        # print(list)
+        # list.append(new_hash_id)
+        # blood_sample_id_codes.append(list)
     print(new_hash_id) # the hash coded if for that blood type
-    """
-    hash_code.append(str(numbers[position]))
-    new_id = ''.join(map(str, hash_code))
-    print("New id: " ,new_id)
-    blood_sample_id_codes.append(new_id)
-    print(blood_sample_id_codes)
-    """
-    #return blood_sample_id_codes
+    blood_sample.append(new_hash_id)
+    print(blood_sample)
+    return blood_sample
 
-    #return hash_coder
-
-def pod_hash(blood_type_id):
+def pod_hash(blood_type_hashed):
     """
     THis function basically creates a hash for each bloodtype, which will be stored and labeled on each
     blood samples later on for location identifcation that only the system will be able to understand.  For example
@@ -180,7 +157,7 @@ def pod_list_report(list):  #show pod database at whenever requested
 def collision_checker(): #NEED help with this one
     pass # check serial numbers to check if the serial number has the same serial number
 
-def remove_expired_samples(list):
+def remove_expired_samples(list): #use a while to loop and check the first in and last out method -quee
     """
     This is the function that is going to make sure that we never have expired bloods
     stuck in our pods at any given time. It does so by checking the current date, and checks every pods and
@@ -200,7 +177,7 @@ def remove_expired_samples(list):
 
 
 # Assignment #2
-def random_blood_need():
+def random_blood_need(): #take from the beginning
     """
     This function basically generates (random amount) people that need different types of blood. The function will create
     a list of need consisting of x amount of blood samples. It will keep track of the amount of blood types and
@@ -228,7 +205,8 @@ def main():
     :return:
     """
     blood_types = ["aneg", "apos", "bpos", "bneg", "abpos", "abneg", "opos", "oneg"]
-    start_d, end_d = get_date()
+    blood_sample = blood_sample_generator(blood_types)
+    blood_sample_complete = hasher(blood_sample)
 
     # blood_list = blood_sample_generator(blood_types)
     # blood_list = serial_code_generator(blood_list)
@@ -240,8 +218,7 @@ def main():
 
     # for loop to run for 21 days
 
-    # for loop to run for a whole month
-    blood_sample_generator(blood_types)
+
 
 if __name__ == '__main__':
     main()
