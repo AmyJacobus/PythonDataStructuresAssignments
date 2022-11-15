@@ -1,7 +1,5 @@
-#import time
 import random
-#get random code
-#get todays date
+from datetime import datetime, timedelta
 
 
 def blood_sample_generator(blood_types):
@@ -17,15 +15,29 @@ def blood_sample_generator(blood_types):
         blood_sample.append(random_blood)
         daily_blood_samples.append(blood_sample)
 
-    return daily_blood_samples
+    print(daily_blood_samples) # list of 10 blood samples
 
 
-def serial_code_generator(blood_list):
+def get_date(): # CAN BE COMPARED BY
+    # Using current time
+    ini_time_for_now = datetime.now()
+    todays_date = ini_time_for_now.strftime("%d_%m")
+    print('Todays date: ', todays_date)
+    after_21days = ini_time_for_now + timedelta(days=21)
+    expiration_dates = after_21days.strftime("%d_%m")
+    print('Expiration date: ', expiration_dates)
+
+    return todays_date, expiration_dates
+
+
+def serial_code_generator(start_d, end_d):
     """
     Basically labels each samples and updates the list with the date it was created and a serial number randomly generated
     :param blood_list:
     :return:
     """
+
+
 
     date = 22
     count = len(blood_list)
@@ -49,7 +61,7 @@ def hasher(): # NEED TO FIX
     global new_hash_id
     new_hash_id = ""
 
-    blood_types  = ['opos'] #EXAMPLE, MAKE SURE TO CHANGE
+    blood_types  = ['opos']  # EXAMPLE, MAKE SURE TO CHANGE
 
     alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                     'v', 'w', 'x', 'y', 'z']
@@ -166,8 +178,7 @@ def pod_list_report(list):  #show pod database at whenever requested
 
 
 def collision_checker(): #NEED help with this one
-    pass
-
+    pass # check serial numbers to check if the serial number has the same serial number
 
 def remove_expired_samples(list):
     """
@@ -201,6 +212,9 @@ def random_blood_need():
     :return:
     """
 
+#def remove_need_for_blood():
+    #pass
+
 def main():
     """
     This main loop basically runs for 30 days straight with several loops running different
@@ -213,7 +227,9 @@ def main():
     and provide a visual report of the blood pods.
     :return:
     """
-    # blood_types = ["aneg", "apos", "bpos", "bneg", "abpos", "abneg", "opos", "oneg"]
+    blood_types = ["aneg", "apos", "bpos", "bneg", "abpos", "abneg", "opos", "oneg"]
+    start_d, end_d = get_date()
+
     # blood_list = blood_sample_generator(blood_types)
     # blood_list = serial_code_generator(blood_list)
     # hasher(blood_types)
@@ -225,8 +241,7 @@ def main():
     # for loop to run for 21 days
 
     # for loop to run for a whole month
-
-    hasher()
+    blood_sample_generator(blood_types)
 
 if __name__ == '__main__':
     main()
