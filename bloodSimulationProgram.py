@@ -10,32 +10,32 @@ def blood_sample_generator(blood_types):
     """
     daily_blood_sample = []
 
-    #blood type
+    # blood type
     random_blood = random.choice(blood_types)
     daily_blood_sample.append(random_blood)
-    print(daily_blood_sample)
+    #print(daily_blood_sample)
 
     # get_date(): # CAN BE COMPARED BY
     # Using current time
     ini_time_for_now = datetime.now()
     todays_date = ini_time_for_now.strftime("%d_%m")
     daily_blood_sample.append(todays_date)
-    print('Todays date: ', todays_date)
+    #print('Todays date: ', todays_date)
     after_21days = ini_time_for_now + timedelta(days=21)
     expiration_dates = after_21days.strftime("%d_%m")
     daily_blood_sample.append(expiration_dates)
-    print('Expiration date: ', expiration_dates)
+    #print('Expiration date: ', expiration_dates)
 
     # serial_code_generator(start_d, end_d):
 
     serial_number = random.randint(1, 99999999999)
     daily_blood_sample.append(serial_number)
 
-    print(daily_blood_sample)
+    #print(daily_blood_sample)
     return daily_blood_sample
 
 
-def hasher(blood_sample): # NEED TO FIX
+def hasher(blood_sample):  # NEED TO FIX
     """
     This how we generate an location_id_code that is going to be labeled on to the sample, basically becomes
     a value in that blood sample list, which will be used to keep track of that specific blood sample, which
@@ -47,7 +47,7 @@ def hasher(blood_sample): # NEED TO FIX
     new_hash_id = ""
 
     blood = blood_sample[0]
-    print('blood?', blood)
+    #print('blood?', blood)
     alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                     'v', 'w', 'x', 'y', 'z']
     reverse = ['z','y','x','w','v','u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a']
@@ -57,7 +57,7 @@ def hasher(blood_sample): # NEED TO FIX
     # blood_hash_code = []
     for letter in blood:
         position = alpha.index(letter)  #0
-        print('test', position)
+        #print('test', position)
         new_hash_id += reverse[position] # generates the hash code for me.
         #hash_code.append(new_hash_id)
         # position = blood_hash_code.index(blood)
@@ -66,50 +66,20 @@ def hasher(blood_sample): # NEED TO FIX
         # print(list)
         # list.append(new_hash_id)
         # blood_sample_id_codes.append(list)
-    print(new_hash_id) # the hash coded if for that blood type
-    blood_sample.append(new_hash_id)
-    print(blood_sample)
+    #print(new_hash_id)  # the hash coded if for that blood type
+    # blood_sample.append(new_hash_id)
+    #print(blood_sample)
     return blood_sample
 
-def pod_hash(blood_type_hashed):
-    """
-    THis function basically creates a hash for each bloodtype, which will be stored and labeled on each
-    blood samples later on for location identifcation that only the system will be able to understand.  For example
-    oneg turns into zeda, which will be labeled on each blood sample that has oneg. Which will automatically
-    be used to detect the location of that blood. That Zeda is suppose to simulate some kind of encryption
-    that a system would have later, that a person wouldnt be able to memorize or understand enough to keep
-    track of things, but the system itself can keep track of any required data piece that passes through its system.
-    :param blood_type:
-    :return:
-    """
-
-    if bloodtype_id == 'oneg':
-        location = "pod1"
-    elif bloodtype_id =='oneg':
-        location = "pod2"
-    elif bloodtype_id == 'oneg':
-        location = "pod3"
-    elif bloodtype_id == 'oneg':
-        location = "pod4"
-    elif bloodtype_id == 'oneg':
-        location = "pod5"
-    elif bloodtype_id== 'oneg':
-        location = "pod6"
-    elif bloodtype_id == 'oneg':
-        location = "pod7"
-    elif bloodtype_id== 'oneg':
-        location = "pod8"
-
-    return location
-
-
-def pods_location_checker():
+def pods_location_checker(list, blood_types, blood_sample):
     """
     THis functions basically checks all the blood samples  based on their hash location id and makes
     sure that they get stored in the right pods and returns the list to the system so other
     systems can continue with their simulated automated work.
     :return: pod_database basically
     """
+
+    #Original sample to test
     sample = [["oneg","21","234","pod1"],["oneg","23","235","pod1"],["oneg","26","236","pod1"],
               ["oneg","26","236","pod2"],["oneg","26","236","pod2"],["oneg","26","236","pod2"],
               ["oneg","26","236","pod3"],["oneg","26","236","pod3"],["oneg","26","236","pod3"],
@@ -119,28 +89,35 @@ def pods_location_checker():
               ["oneg","26","236","pod7"],["oneg","26","236","pod7"],["oneg","26","236","pod7"],
               ["oneg","26","236","pod8"],["oneg","26","236","pod8"],["oneg","26","236","pod8"]]
 
-    # CAN BE 2D ARRAYS IF THAT WORKS MUCH BETTER - 2D LIST WORKS TOO
-    list = [[], [], [], [], [], [], [], []]  # 3D list
-    for x in sample:
-        sample_1 = x
-        if sample_1[3] == "pod1":
-            list[0].append(sample_1)
-        elif sample_1[3] == "pod2":
-            list[1].append(sample_1)
-        elif sample_1[3] == "pod3":
-            list[2].append(sample_1)
-        elif sample_1[3] == "pod4":
-            list[3].append(sample_1)
-        elif sample_1[3] == "pod5":
-            list[4].append(sample_1)
-        elif sample_1[3] == "pod6":
-            list[5].append(sample_1)
-        elif sample_1[3] == "pod7":
-            list[6].append(sample_1)
-        elif sample_1[3] == "pod8":
-            list[7].append(sample_1)
+    blood_code_hashed_list = []
+    x = 0
+    for i in blood_types:
+        hash_code = hasher(blood_types[x])
+        blood_code_hashed_list.append(hash_code)
+        x += 1
 
-    return list
+
+    lista = list
+    # for x in sample:
+    #     sample_1 = x
+    if blood_sample[0] == blood_code_hashed_list[0]:
+        lista[0].append(blood_sample)
+    elif blood_sample[0] == blood_code_hashed_list[1]:
+        lista[1].append(blood_sample)
+    elif blood_sample[0] == blood_code_hashed_list[2]:
+        lista[2].append(blood_sample)
+    elif blood_sample[0] == blood_code_hashed_list[3]:
+        lista[3].append(blood_sample)
+    elif blood_sample[0] == blood_code_hashed_list[4]:
+        lista[4].append(blood_sample)
+    elif blood_sample[0] == blood_code_hashed_list[5]:
+        lista[5].append(blood_sample)
+    elif blood_sample[0] == blood_code_hashed_list[6]:
+        lista[6].append(blood_sample)
+    elif blood_sample[0] == blood_code_hashed_list[7]:
+        lista[7].append(blood_sample)
+
+    return lista
 
 
 def pod_list_report(list):  #show pod database at whenever requested
@@ -165,19 +142,28 @@ def remove_expired_samples(list): #use a while to loop and check the first in an
     :param list:
     :return:
     """
-    date = 19
-    for x in list[0]:
-        list_layer2 = x
-        import_date = list_layer2[1]
-        print(import_date) #test
-        the_date = int(import_date)
-        if the_date > date: #issue getting the date out!
-            list[0].remove(list_layer2)
+    pass
+    ini_time_for_now = datetime.now()
+    todays_date = ini_time_for_now.strftime("%d_%m")
+
+    list = list
+    date = todays_date
+    removed = 0
+    print("Current date: ", date)
+    for x in list: # get each pod
+        pod = x
+        print("Pod is:", pod)
+        print(pod[0][2])
+        if pod[0][2] == date or pod[0][2] > date:
+            sample = pod[0]
+            pod.remove(sample)
+            removed = 1
+    print(f"A total of {removed} pods have been removed on {todays_date}")
     return list
 
 
 # Assignment #2
-def random_blood_need(): #take from the beginning
+def random_blood_need_request(blood_types):  # take from the beginning
     """
     This function basically generates (random amount) people that need different types of blood. The function will create
     a list of need consisting of x amount of blood samples. It will keep track of the amount of blood types and
@@ -185,9 +171,55 @@ def random_blood_need(): #take from the beginning
     For example oneg: 6, ab-neg: 8, ab-pos: 2
     And based on these numbers, it will run a for loop to grab those list (blood samples) and pull
     them into another list, which together will create another 3D list, that will be the (blood deliveyr)
-    bag or something like that, that the hosipital or medicial faciilit will take for the day
+    bag or something like that, that the medical lab will take for the day
     :return:
     """
+
+    people_that_need_blood = random.randint(1, 10)
+    for i in people_that_need_blood:
+        generate_blood_request = random.choice(blood_types)
+        blood_request = []
+        blood_request.append(generate_blood_request)
+
+    aneg = 0
+    apos = 0
+    bpos = 0
+    bneg = 0
+    abpos = 0
+    abneg = 0
+    opos = 0
+    oneg = 0
+
+    if  blood_request == 'aneg':
+        aneg += 1
+    elif blood_request == 'apos':
+        apos += 1
+    elif blood_request =='bpos':
+        bpos  += 1
+    elif blood_request == 'bneg':
+        bneg += 1
+    elif blood_request == 'abpos':
+        abpos += 1
+    elif blood_request == 'abneg':
+        abneg += 1
+    elif blood_request == 'opos':
+        opos += 1
+    elif blood_request == 'oneg':
+        oneg += 1
+
+
+def generate_10_pods_daily(list):
+
+    day = 1
+    while day != 11:
+        blood_types = ["aneg", "apos", "bpos", "bneg", "abpos", "abneg", "opos", "oneg"]
+        blood_sample = blood_sample_generator(blood_types)
+        blood_sample_complete = hasher(blood_sample)
+        list = pods_location_checker(list, blood_types, blood_sample_complete)
+        day += 1
+    #pod_list_report(list)
+    return list
+
 
 #def remove_need_for_blood():
     #pass
@@ -204,9 +236,22 @@ def main():
     and provide a visual report of the blood pods.
     :return:
     """
-    blood_types = ["aneg", "apos", "bpos", "bneg", "abpos", "abneg", "opos", "oneg"]
-    blood_sample = blood_sample_generator(blood_types)
-    blood_sample_complete = hasher(blood_sample)
+    list = [[], [], [], [], [], [], [], []]
+
+    day = 1
+    while day != 31: #runs simulation for 31 days
+        lista = generate_10_pods_daily(list) # populate pods with 10 everyday
+        report = pod_list_report(list)
+        list = remove_expired_samples(list)
+        print(f"Day #{day} pod report")
+        report1 = pod_list_report(list)
+        day += 1
+
+
+
+
+    #simulate 10 pods a day
+
 
     # blood_list = blood_sample_generator(blood_types)
     # blood_list = serial_code_generator(blood_list)
