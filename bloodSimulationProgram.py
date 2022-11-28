@@ -120,7 +120,7 @@ def pods_location_checker(list, blood_types, blood_sample):
     return lista
 
 
-def pod_list_report(list):  #show pod database at whenever requested
+def pod_list_report(list):  #show pod database whenever requested
     print("Pod1:",list[0])
     print("Pod2:",list[1])
     print("Pod3:",list[2])
@@ -132,7 +132,13 @@ def pod_list_report(list):  #show pod database at whenever requested
 
 
 def collision_checker(): #NEED help with this one
-    pass # check serial numbers to check if the serial number has the same serial number
+    """
+    Basically what this piece of function does is check whatever sample, based on it's location, it runs
+    that pods serial number index within its list to check if that serial number appears in any
+    other list(blood) sample in that pod, to make sure that there isn't any kind of similar
+    serial number that would make the bloods the same.
+    :return:
+    """
 
 def remove_expired_samples(list): #use a while to loop and check the first in and last out method -quee
     """
