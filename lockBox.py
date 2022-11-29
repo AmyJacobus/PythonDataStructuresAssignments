@@ -9,8 +9,9 @@ class Node:
 # 2. Turn the 4 code into the main digit to be cracked
 # 3. Store those code in the stack
 # 4. Print the stack and check againts the code
+# - check the code against in for loop, each permutation code against the ones in the double linked list
 # 5. Track the time for each, until completed
----
+# ---
 #6. Repeat again for the 6 digit
 #7. Repeat again for the 10 digits
 

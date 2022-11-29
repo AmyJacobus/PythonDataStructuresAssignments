@@ -22,7 +22,7 @@ def main():
     hasho = hash(quote)
     positive_hasho = abs(hasho)
     #print(quote)
-    #print(positive_hasho) #The hash of the quote
+    print(positive_hasho) #The hash of the quote
     print("_____________________________________________________________________________")
 
     print("Starting cracking processs.................")
