@@ -1,13 +1,4 @@
 
-
-def generate_hash_code():
-    pass
-    # Our lock box will use scrolling integers not letters.
-
-def lock_box_simulation():
-    pass
-    # The lock box (simulated) must be created using stack rules implemented with a Doubly Linked List in Python.
-
 def main():
 
     quote = "The Davinci code we are using: Simplicity is the ultimate sophistication."
@@ -26,6 +17,23 @@ def main():
     print("_____________________________________________________________________________")
 
     print("Starting cracking processs.................")
+
+    import itertools
+
+    lock_passcode = positive_hasho
+    lock_passcode_len = str(lock_passcode)
+    digits = list(range(0, 10))
+
+    for permutation in itertools.product(digits, repeat=len(lock_passcode_len)):
+        permutation_list = [str(digit) for digit in permutation]
+        permutation = "".join(permutation_list)
+        permutation = int(permutation)
+        if permutation == lock_passcode:
+            print(f"Code unlocked: {permutation}")
+            break
+
+    print("Code has been cracked!")
+    print("The code was: ", permutation)
 
 
 if __name__ == '__main__':
