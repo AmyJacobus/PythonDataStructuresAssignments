@@ -25,71 +25,159 @@ lock_passcode = positive_hasho
 key_list = [int(x)for x in str(lock_passcode)]
 print(f"Secret passcode is: {key_list}")
 
+#create empty link list
+class Node:
+    def __init__(self, next=None, prev=None, data=None):
+        # reference to next node in DLL
+        self.next = next
+        # reference to previous node in DLL
+        self.prev = prev
+        self.data = data
 
-# Add that lock code key to a double link list using the linked list
-# Add that lock code key to a double link list
-# compare linked linked list to each other and let the user know when it has been cracked
-# Display the time
+class LinkedList:
+    # Init a Linked List object
+    def __init__(self):
+        self.head = None
+
+    def push(self, new_data):
+        # 1 & 2: Allocate the Node & Put in the data
+        new_node = Node(data=new_data)
+        # 3. Make next of new node as head and previous as NULL
+        new_node.next = self.head
+        new_node.prev = None
+        # 4. change prev of head node to new node
+        if self.head is not None:
+            self.head.prev = new_node
+        # 5. move the head to point to the new node
+        self.head = new_node
+
+    def pop(self):
+        original_head = self.head
+        new_head = original_head.next
+        self.head = new_head
+        new_head.previous = None
+#----------------------------------------
 
 
+DoubleLinkList = LinkedList()  # create object
 
-# Cracks the code with the number of digits based on how many digits there are in th key
-lock_passcode_len = str(lock_passcode)
-lock_passcode_lenz = len(lock_passcode_len)
-digits = list(range(0, 10))
-print(f"We are attempting to crack a code that has {lock_passcode_lenz} digits")
+#Use the linkedlist - reverse push into
+print("Double linked list code format: ", end="")
+for index in range(len(key_list)):
+    #print("Printing index", index, end=" -->" )
+    DoubleLinkList.push(key_list[len(key_list) - (index + 1)])  # reverse inserting
+
+    print(DoubleLinkList.head.data, end=" ")
+    if index < len(key_list)-1:
+        print(end=" --> ")
+
+# Get the first 4 head
+
 print()
+print("Cracking 4 digits......")
+digits = list(range(0,10))
+length = 4
 
-# track time
-start_ss = perf_counter_ns()
-for permutation in itertools.product(digits, repeat=len(lock_passcode_len)):
+CodeToCrack = ""
+
+for number in range(length):
+    CodeToCrack += str(DoubleLinkList.head.data)
+    DoubleLinkList.pop()
+
+print()
+print("Code to be cracked: ", CodeToCrack) #Test and shows us the empty string
+
+
+start_ss = perf_counter_ns() # Tracks the time
+for permutation in itertools.product(digits, repeat=len(CodeToCrack)):
     permutation_list = [str(digit) for digit in permutation]
     permutation = "".join(permutation_list)
     permutation = int(permutation)
-    if start_ss > 10000:
-        print("LOADING...")
-        print("██████████████]99% ")
-        print("Oops...the cracking process is taking longer than usual..")
-        print("System crashed, unable to crack code at this time....CPU at 99%!")
-        print("The last attempt was: ", permutation)
-        break
-    elif permutation == lock_passcode:
+    if permutation == int(CodeToCrack):
+        print("██ 39%")
+        print("███ 49 %")
+        print("████ 76 %")
+        print("█████ 89 %")
+        print("██████ 100 %")
         print(f"Code unlocked: {permutation}")
         break
-stop_ss = perf_counter_ns()
+stop_ss = perf_counter_ns() #Stop tracking time when the permutation is process is done
 total_time_ss = stop_ss - start_ss
-print("This process took", total_time_ss, "seconds!")
+print("This process took", (total_time_ss * 10**-9), "Seconds!")
 print()
 print("________________________________________________________________________________________")
 print()
 
-if lock_passcode_lenz > 4:
-    print("You are dealing with a very large digit number, we can do 4 digits with your current hardware specs.")
-    print("We can provide you with a simulation of a smaller digit code being cracked.")
+print()
+print(".....")
+print("Since that was a success...")
+print("Attempting 6 digits....")
 
-    key_code = 1542
-    print("Code sample: ", key_code)
-    attempts = 1
-    for permutation in itertools.product(digits, repeat=4):
-        permutation_list = [str(digit) for digit in permutation]
-        permutation = "".join(permutation_list)
-        permutation = int(permutation)
-        attempts += 1
-        if attempts == 50:
-            print("Starting..")
-            print("█▒▒▒▒▒▒▒▒▒")
-        elif attempts == 100:
-            print("███▒▒▒▒▒▒▒")
-        elif attempts == 500:
-            print("█████▒▒▒▒▒")
-        elif attempts == 1000:
-            print("███████▒▒▒")
-        if permutation == key_code:
-            print(f"‎███████████████████ 100% Code cracked successfully: {permutation}")
-            break
+length = 6
+
+CodeToCrack = ""
+
+for number in range(length):
+    CodeToCrack += str(DoubleLinkList.head.data)
+    DoubleLinkList.pop()
+
+print()
+print("Code to be cracked: ", CodeToCrack)  #Test and shows us the empty string
 
 
+start_ss = perf_counter_ns()  # Tracks the time
+for permutation in itertools.product(digits, repeat=len(CodeToCrack)):
+    permutation_list = [str(digit) for digit in permutation]
+    permutation = "".join(permutation_list)
+    permutation = int(permutation)
+    if permutation == int(CodeToCrack):
+        print("██ 39%")
+        print("███ 49 %")
+        print("████ 76 %")
+        print("█████ 89 %")
+        print("██████ 100 %")
+        print(f"Code unlocked: {permutation}")
+        break
+stop_ss = perf_counter_ns() #Stop tracking time when the permutation is process is done
+total_time_ss = stop_ss - start_ss
+print("This process took", (total_time_ss * 10**-9), "Seconds!")
+print()
+print("________________________________________________________________________________________")
+print()
+
+print("Well...why not push 8......")
+print("Lets see...")
+print("Attempting.....8 digits...")
+print()
+
+length = 8
+
+CodeToCrack = ""
+
+for number in range(length):
+    CodeToCrack += str(DoubleLinkList.head.data)
+    DoubleLinkList.pop()
+
+print()
+print("Code to be cracked: ", CodeToCrack) #Test and shows us the empty string
 
 
-
-
+start_ss = perf_counter_ns() # Tracks the time
+for permutation in itertools.product(digits, repeat=len(CodeToCrack)):
+    permutation_list = [str(digit) for digit in permutation]
+    permutation = "".join(permutation_list)
+    permutation = int(permutation)
+    if permutation == int(CodeToCrack):
+        print("██ 39%")
+        print("███ 49 %")
+        print("████ 76 %")
+        print("█████ 89 %")
+        print("██████ 100 %")
+        print(f"Code unlocked: {permutation}")
+        break
+stop_ss = perf_counter_ns() #Stop tracking time when the permutation is process is done
+total_time_ss = stop_ss - start_ss
+print("This process took", (total_time_ss * 10**-9), "Seconds!")
+print()
+print("________________________________________________________________________________________")
+print()
